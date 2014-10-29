@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Awesomite</title>
+    </head>
+
+    <body>
+        <h1>Awesomite</h1>
+        <h2>Top 10 Recent music list</h2>
+        <strong>
+            {% for item1, item2 in top100music %}
+                <a href="{{ item2 }}">{{ item1 }}</a>
+                <hr>
+            {% endfor %}
+        </strong>
+        <h2>Todo list/day-planner</h2>
+        <strong>
+            <input type="submit" value="add an event">
+        </strong>
+    </body>
+</html>
