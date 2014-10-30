@@ -14,6 +14,8 @@ def index(request):
 
     #######################
     #for top 10 music list
+    #######################
+
     html_doc = urllib.urlopen("https://www.youtube.com/playlist?list=PLFgquLnL59akA2PflFpeQG9L01VFg90wS")
     soup = BeautifulSoup(html_doc)
     musiclist = []
@@ -32,27 +34,21 @@ def index(request):
 
     #########################
     #for todo list
-    list = tasks.objects.all()
-    context_dict['todolist'] = list
-
-    return render_to_response('awesomite/index.html', context_dict, context)
-
-
-def addtodo(request):
-    context = RequestContext(request)
+    #########################
 
     if request.method == 'POST':
         form = todoform(request.POST)
 
         if form.is_valid():
             form.save(commit=True)
-            return redirect()
-            return index(request)
         else:
             print form.errors
     else:
         form = todoform()
+    context_dict['form'] = form
+    list = tasks.objects.all()
+    context_dict['todolist'] = list
+
+    return render_to_response('awesomite/index.html', context_dict, context)
 
 
-
-    return render_to_response('awesomite/index.html', {'form':form}, context)
