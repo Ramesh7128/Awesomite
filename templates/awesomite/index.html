@@ -16,7 +16,7 @@
             <h1>Awesomite</h1>
         <div class="row-fluid">
             <div class="span6">
-                <h2>Top 10 Recent music list</h2>
+                <h2>Top 10 popular videos</h2>
                 <strong>
                     {% for item1, item2 in top100music %}
                         <a href="{{ item2 }}">{{ item1 }}</a>
@@ -31,7 +31,6 @@
                     {% for hidden in form.hidden_fields %}
                         {{ hidden }}
                     {% endfor %}
-
                     {% for field in form.visible_fields %}
 {#                        {{ field.errors }}#}
                         <div class="control-group {{ field.html_name }} {% if field.errors %}error{% endif %}">
@@ -39,12 +38,17 @@
                         <div class="controls">{{ field }}</div>
                         </div>
                     {% endfor %}
+
                     <button class="btn btn-primary" type="submit" name="submit">Add an event</button>
                 </form>
+                <form class="form-horizontal" method="post" action="/awesomite/" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+                {% csrf_token %}
                 {% for list in todolist %}
                 <h3>{{ list.title }}</h3>
-                <p>{{ list.description }}-{{ list.time }}</p>
+                <input type="hidden" name="title" value="{{ list.title }}">
+                <p>{{ list.description }}-{{ list.time }}   <input class="btn btn-danger" type="submit" name="del" value="del"></p>
                 {% endfor %}
+                </form>
 
             </div>
         </div>

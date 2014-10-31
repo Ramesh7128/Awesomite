@@ -8,4 +8,5 @@ class todoform(forms.ModelForm):
 
     class Meta:
         model = tasks
+        # widgets = {'date': forms.DateInput(attrs={'id': 'datepicker'})}
         fields = ('title','description','time')

@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from awesomite.models import tasks
 from awesomite.forms import todoform
 import urllib
+from django.http import HttpResponseRedirect
 import json
 from bs4 import BeautifulSoup
 import csv
@@ -16,7 +17,7 @@ def index(request):
     #for top 10 music list
     #######################
 
-    html_doc = urllib.urlopen("https://www.youtube.com/playlist?list=PLFgquLnL59akA2PflFpeQG9L01VFg90wS")
+    html_doc = urllib.urlopen("https://www.youtube.com/playlist?list=PLrEnWoR732-BHrPp_Pm8_VleD68f9s14-")
     soup = BeautifulSoup(html_doc)
     musiclist = []
     urllist = []
@@ -37,12 +38,19 @@ def index(request):
     #########################
 
     if request.method == 'POST':
-        form = todoform(request.POST)
+        if 'submit' in request.POST:
+            form = todoform(request.POST)
 
-        if form.is_valid():
-            form.save(commit=True)
-        else:
-            print form.errors
+            if form.is_valid():
+                form.save(commit=True)
+                return HttpResponseRedirect("/awesomite/")
+            else:
+                print form.errors
+        elif 'del' in request.POST:
+            title = request.POST.get('title')
+            tasks.objects.filter(title=title).delete()
+            return HttpResponseRedirect("/awesomite/")
+
     else:
         form = todoform()
     context_dict['form'] = form
