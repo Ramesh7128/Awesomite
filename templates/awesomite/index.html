@@ -9,6 +9,15 @@
         <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
         <link href="{% static 'css/bootstrap-responsive.css' %}" rel="stylesheet">
         <title>Awesomite- youl find what you came looking for</title>
+        <link rel="stylesheet"
+              href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.css">
+        <link rel="stylesheet"
+              href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js">
+        </script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.js">
+        </script>
+        {{ form.media }}
     </head>
 
     <body>
@@ -26,21 +35,30 @@
             </div>
             <div class="span6">
                 <h2>Todo list/day-planner</h2>
-                <form class="form-horizontal" method="post" action="/awesomite/" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+                <form class="form-horizontal" role="form" method="post" action="/awesomite/" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
                     {% csrf_token %}
                     {% for hidden in form.hidden_fields %}
                         {{ hidden }}
                     {% endfor %}
                     {% for field in form.visible_fields %}
 {#                        {{ field.errors }}#}
-                        <div class="control-group {{ field.html_name }} {% if field.errors %}error{% endif %}">
-                        <label class="control-label">{{ field.help_text }}{% if field.field.required %} *{% endif %}</label>
-                        <div class="controls">{{ field }}</div>
-                        </div>
-                    {% endfor %}
+{#                        <div class="control-group {{ field.html_name }} {% if field.errors %}error{% endif %}">#}
+{#                        <label class="control-label">{{ field.help_text }}{% if field.field.required %} *{% endif %}</label>#}
+{#                        <div class="controls">{{ field }}</div>#}
+{#                        </div>#}
+                        <div id="div_{{ field.html_name }}" class="form-group{% if field.errors %} has-error{% endif %}">
+                            {{ field.label_tag }}
+                            {{ field }}
 
-                    <button class="btn btn-primary" type="submit" name="submit">Add an event</button>
+                            <div class="help-block">{{ field.errors }}</div>
+                        </div>
+                        {% endfor %}
+                    <div class="form-group">
+                    <button class="btn btn-primary" type="submit" name="submit" value="submit">Add an event</button>
+                    </div>
                 </form>
+
+
                 <form class="form-horizontal" method="post" action="/awesomite/" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
                 {% csrf_token %}
                 {% for list in todolist %}
@@ -52,9 +70,9 @@
 
             </div>
         </div>
-        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-        <script src="{% static 'js/rangoajax.js' %}"></script>
+{#        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>#}
+{#        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>#}
+{#        <script src="{% static 'js/bootstrap.min.js' %}"></script>#}
+{#        <script src="{% static 'js/rangoajax.js' %}"></script>#}
     </body>
 </html>
