@@ -1,5 +1,6 @@
 from django import forms
-from awesomite.models import tasks
+from django.contrib.auth.models import User
+from awesomite.models import tasks, Userprofile
 from bootstrap3_datetime.widgets import DateTimePicker
 
 class todoform(forms.ModelForm):
@@ -11,3 +12,17 @@ class todoform(forms.ModelForm):
         model = tasks
         # widgets = {'date': forms.DateInput(attrs={'id': 'datepicker'})}
         fields = ('title','description','time')
+
+
+class Userform(forms.ModelForm):
+    password =forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+class Userprofileform(forms.ModelForm):
+    class Meta:
+        model = Userprofile
+        fields = ('phonenumber',)
+

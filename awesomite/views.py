@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 import json
 from bs4 import BeautifulSoup
 import csv
+from awesomite.forms import Userform, Userprofileform
 
 def index(request):
     context = RequestContext(request)
@@ -58,5 +59,34 @@ def index(request):
     context_dict['todolist'] = list
 
     return render_to_response('awesomite/index.html', context_dict, context)
+
+
+def register(request):
+    context = RequestContext(request)
+    registered = False
+
+    if request.method == 'POST':
+        user_form = Userform(data=request.POST)
+        profile_form = Userprofileform(data=request.POST)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+
+            profile = profile_form.save(commit=False)
+            profile.user = user
+
+            profile.save()
+            registered =True
+
+        else:
+            print user_form.errors, profile_form.errors
+    else:
+        user_form = Userform()
+        profile_form = Userprofileform()
+
+    return render_to_response('rango/register', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered}, context)
+
 
 
