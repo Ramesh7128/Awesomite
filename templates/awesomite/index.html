@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load crispy_forms_tags %}
 <html>
 
     <head>
@@ -21,45 +22,49 @@
     </head>
 
     <body>
-        <div class="hero-unit">
-            <h1>Awesomite</h1>
-        <div class="row-fluid">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+
+        <a class="brand" href="/awesomite/">Awesomite</a>
+        <ul class="nav pull-right">
+        {% if user.is_authenticated %}
+            <li><a href="/awesomite/logout/">logout</a></li>
+        {% else %}
+            <li><a href="/awesomite/register/">Register</a></li>
+            <li><a href="/awesomite/login/">login</a></li>
+        {% endif %}
+        </ul>
+    </div>
+    </div>
+    <div class="hero-unit">
+            <h1 class="text-center">Awesomite</h1>
+    </div>
+    <div class="row-fluid">
+
             <div class="span6">
-                <h2>Top 10 popular videos</h2>
-                <strong>
-                    {% for item1, item2 in top100music %}
-                        <a href="{{ item2 }}">{{ item1 }}</a>
-                        <hr>
-                    {% endfor %}
-                </strong>
-            </div>
-            <div class="span6">
+                <div class = "text-center">
                 <h2>Todo list/day-planner</h2>
-                <form class="form-horizontal" role="form" method="post" action="/awesomite/" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+                </div>
+                <form class="sign-in span4 navbar-form text-center" role="form" method="post" action="/awesomite/" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
                     {% csrf_token %}
-                    {% for hidden in form.hidden_fields %}
-                        {{ hidden }}
-                    {% endfor %}
-                    {% for field in form.visible_fields %}
-{#                        {{ field.errors }}#}
-{#                        <div class="control-group {{ field.html_name }} {% if field.errors %}error{% endif %}">#}
-{#                        <label class="control-label">{{ field.help_text }}{% if field.field.required %} *{% endif %}</label>#}
-{#                        <div class="controls">{{ field }}</div>#}
+                    {{ form|crispy }}
+
+{#                    {% for hidden in form.hidden_fields %}#}
+{#                        {{ hidden }}#}
+{#                    {% endfor %}#}
+{#                    {% for field in form.visible_fields %}#}
+{#                        <div id="div_{{ field.html_name }}" class="form-group{% if field.errors %} has-error{% endif %}">#}
+{#                            {{ field.label_tag }}#}
+{#                            {{ field }}#}
+{#                            <div class="help-block">{{ field.errors }}</div>#}
 {#                        </div>#}
-                        <div id="div_{{ field.html_name }}" class="form-group{% if field.errors %} has-error{% endif %}">
-                            {{ field.label_tag }}
-                            {{ field }}
-
-                            <div class="help-block">{{ field.errors }}</div>
-                        </div>
-                        {% endfor %}
-                    <div class="form-group">
+{#                        {% endfor %}#}
+{#                    <div class="help-block">{{ nouser }}</div>#}
+{#                    <div class="form-group">#}
                     <button class="btn btn-primary" type="submit" name="submit" value="submit">Add an event</button>
-                    </div>
+{#                    </div>#}
                 </form>
-
-
-                <form class="form-horizontal" method="post" action="/awesomite/" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+                <form class="sign-in span4 navbar-form text-center" method="post" action="/awesomite/" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
                 {% csrf_token %}
                 {% for list in todolist %}
                 <h3>{{ list.title }}</h3>
@@ -67,12 +72,19 @@
                 <p>{{ list.description }}-{{ list.time }}   <input class="btn btn-danger" type="submit" name="del" value="del"></p>
                 {% endfor %}
                 </form>
-
+            </div>
+            <div class="span6">
+                <div class = "text-center">
+                <h2>Top 10 popular videos</h2>
+                </div>
+                <strong>
+                    {% for item1, item2 in top100music %}
+                        <a href="{{ item2 }}">{{ item1 }}</a>
+                        <iframe width="560" height="315" src="{{ item2}}" frameborder="0" allowfullscreen></iframe>
+                        <hr>
+                    {% endfor %}
+                </strong>
             </div>
         </div>
-{#        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>#}
-{#        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>#}
-{#        <script src="{% static 'js/bootstrap.min.js' %}"></script>#}
-{#        <script src="{% static 'js/rangoajax.js' %}"></script>#}
     </body>
 </html>

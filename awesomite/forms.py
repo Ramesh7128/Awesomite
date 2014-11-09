@@ -4,9 +4,9 @@ from awesomite.models import tasks, Userprofile
 from bootstrap3_datetime.widgets import DateTimePicker
 
 class todoform(forms.ModelForm):
-    title = forms.CharField(max_length=250, help_text="Title")
-    description = forms.CharField(max_length=400, help_text="Description")
-    time = forms.DateTimeField(input_formats=['%Y-%m-%d %H:%M'],help_text="Time", widget=DateTimePicker(options={"format": "YYYY-MM-DD HH:mm","pickSeconds": False}))
+    title = forms.CharField(max_length=250)
+    description = forms.CharField(max_length=400)
+    time = forms.DateTimeField(input_formats=['%Y-%m-%d %H:%M'], widget=DateTimePicker(options={"format": "YYYY-MM-DD HH:mm","pickSeconds": False}))
 
     class Meta:
         model = tasks

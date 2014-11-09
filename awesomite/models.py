@@ -10,7 +10,7 @@ class Userprofile(models.Model):
         return self.user.username
 
 class tasks(models.Model):
-    user = models.OneToOneField(User)
+    user = models.ForeignKey(User)
     title = models.CharField(max_length=250)
     description = models.CharField(max_length=400)
     time = models.DateTimeField()

@@ -8,6 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^awesomite/', include('awesomite.urls')),
+
     # url(r'^awesome/', include('awesome.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

@@ -7,7 +7,7 @@
         <link href="{% static 'css/bootstrap-fluid-adj.css' %}" rel="stylesheet">
         <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
         <link href="{% static 'css/bootstrap-responsive.css' %}" rel="stylesheet">
-        <title>Awesomite - youl find what you came looking for</title>
+        <title>Awesomite- youl find what you came looking for</title>
         <link rel="stylesheet"
               href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.css">
         <link rel="stylesheet"
@@ -18,33 +18,23 @@
         </script>
         {{ form.media }}
     </head>
+
     <body>
     <div class="hero-unit">
-        <h1>Register</h1>
+        <h2>Login to Awesomite</h2>
 
-        {% if registered %}
-        Awesomite says: <strong>thank you for registering!</strong>
-        <a href="/awesomite/">Return to the homepage.</a><br />
-        {% else %}
-        <strong>register here!</strong><br/>
         <div class="container">
-        <form class id="user_form" method="post" action="/awesomite/register/"
-                enctype="multipart/form-data">
-
+        <form class="sign-in span4" id="login_form" method="post" action="/awesomite/login/">
             {% csrf_token %}
-
-            <!-- Display each form. The as_p method wraps each element in a paragraph
-                 (<p>) element. This ensures each element appears on a new line,
-                 making everything look neater. -->
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-
-            <!-- Provide a button to click to submit the form. -->
-            <input class="btn btn-primary" type="submit" name="submit" value="Register" />
+            Username: <input type="text" class="input-block-level" name="username" value="" size="50" />
+            <br />
+            Password: <input type="password" class="input-block-level" name="password" value="" size="50" />
+            <br />
+            <input class="btn btn-primary" type="submit" value="submit" />
         </form>
         </div>
-        {% endif %}
 
     </div>
+
     </body>
 </html>

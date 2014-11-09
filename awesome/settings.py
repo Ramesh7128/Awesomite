@@ -8,7 +8,7 @@ PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates')
 DATABASE_PATH = os.path.join(PROJECT_PATH, 'awesomite.db')
-
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -139,7 +139,16 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'awesomite',
     'bootstrap3_datetime',
+    'djcelery',
+    'kombu.transport.django',
+    'crispy_forms',
 )
+
+########celery setings#######33
+import djcelery
+djcelery.setup_loader()
+BROKER_URL = "django://"
+
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
