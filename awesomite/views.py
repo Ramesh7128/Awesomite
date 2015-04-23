@@ -63,7 +63,7 @@ def index(request):
                     mail = smtplib.SMTP('smtp.gmail.com', 587)
                     mail.ehlo()
                     mail.starttls()
-                    mail.login('ramesh7128@gmail.com','vegetable4')
+                    mail.login('ramesh7128@gmail.com','********')
                     mail.sendmail('ramesh7128@gmail.com', 'ramesh7128@gmail.com', content)
                     mail.close()
                     ########################
